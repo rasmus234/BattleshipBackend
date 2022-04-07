@@ -1,7 +1,11 @@
+using BattleshipBackend.Hubs;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+app.MapHub<ExampleHub>("/hubs/example");
 
 app.Run();
