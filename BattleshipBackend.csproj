@@ -10,4 +10,10 @@
       <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="BattleshipBackend\obj\BattleshipBackend.csproj.nuget.dgspec.json" />
+      <_ContentIncludedByDefault Remove="BattleshipBackend\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="BattleshipBackend\obj\project.packagespec.json" />
+    </ItemGroup>
+
 </Project>
