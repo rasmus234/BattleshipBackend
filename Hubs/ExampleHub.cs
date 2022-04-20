@@ -5,6 +5,7 @@ namespace BattleshipBackend.Hubs;
 public class ExampleHub : Hub
 {
     Dictionary<string, IClientProxy> _users = new();
+    Dictionary<string, GameRoom> _games = new();
 
     /// <summary>
     /// Checks against the user dictionary to see if the username is already in use.
@@ -50,9 +51,33 @@ public class ExampleHub : Hub
     /// 
     /// </summary>
     /// <param name="EnemyName">The username to play against</param>
-    public void CreateGameRoom(string roomName)
+    public void CreateGameRoom(string roomName, string playerTwo)
     {
+        GameRoom gameRoom = new GameRoom(roomName);
+        gameRoom.PlayerOne = Clients.Caller;
+    }
+    public void JoinGameRoom(string roomName)
+    {
+        try
+        {
+            GameRoom gameRoom = _games[roomName];
+        }
+        catch (Exception ex)
+        {
+
+        }
         
     }
 
+
+}
+class GameRoom
+{
+    public string roomName { get; }
+    public IClientProxy PlayerOne { get; set; }
+    public IClientProxy PlayerTwo { get; set; }
+    public GameRoom(string roomName)
+    {
+        this.roomName = roomName;
+    }
 }
