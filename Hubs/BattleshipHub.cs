@@ -67,6 +67,7 @@ public class BattleshipHub : Hub
         
         _games.Add(roomName, new GameRoom());
         _games[roomName].PlayerOne = Context.ConnectionId;
+        _games[roomName].GameID = roomName;
 
         Debug.WriteLine(Context.ConnectionId + ": Created a room with the name '" + roomName + "'");
 
@@ -92,19 +93,11 @@ public class BattleshipHub : Hub
         }
     }
 
-    public Dictionary<string, int> GetGameRooms()
+    public GameRoom[] GetGameRooms()
     {
-        var dict = new Dictionary<string, int>();
-        
-        foreach (var (roomName, value) in _games)
-        {
-            var players = value.PlayerTwo == default ? 1 : 2;
-            
-            
-            dict.Add(roomName, players);
-        }
-        
-        return dict;
+
+
+        return _games.Values.ToArray();
     }
 
     public override Task OnConnectedAsync()
@@ -115,10 +108,9 @@ public class BattleshipHub : Hub
     }
 }
 
-class GameRoom
+public class GameRoom
 {
+    public string GameID { get; set; }
     public string PlayerOne { get; set; }
     public string PlayerTwo { get; set; }
-    
-    
 }
