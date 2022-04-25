@@ -1,10 +1,13 @@
+
 using System.Diagnostics;
+
 using Microsoft.AspNetCore.SignalR;
 
 namespace BattleshipBackend.Hubs;
 
 public class BattleshipHub : Hub
 {
+
     static Dictionary<string, string> _users = new();
     static Dictionary<string, GameRoom> _games = new();
 
