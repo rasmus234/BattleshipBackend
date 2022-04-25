@@ -14,6 +14,8 @@ app.UseCors(policyBuilder =>
     policyBuilder.SetIsOriginAllowed(_ => true);
 });
 
-app.MapHub<BattleshipHub>("/hubs/example");
+
+app.MapHub<BattleshipHub>("/hubs/battleship");
+
 
 app.Run();
