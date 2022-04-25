@@ -89,6 +89,21 @@ public class BattleshipHub : Hub
         }
     }
 
+    public Dictionary<string, int> GetGameRooms()
+    {
+        var dict = new Dictionary<string, int>();
+        
+        foreach (var (roomName, value) in _games)
+        {
+            var players = value.PlayerTwo == default ? 1 : 2;
+            
+            
+            dict.Add(roomName, players);
+        }
+        
+        return dict;
+    }
+
     public override Task OnConnectedAsync()
     {
         Debug.WriteLine("User has connected with ID: " + Context.ConnectionId);
@@ -101,4 +116,6 @@ class GameRoom
 {
     public string PlayerOne { get; set; }
     public string PlayerTwo { get; set; }
+    
+    
 }
