@@ -1,56 +1,45 @@
 using System.Diagnostics;
+using System.Numerics;
 using Microsoft.AspNetCore.SignalR;
 
 namespace BattleshipBackend.Hubs;
 
 public class BattleshipHub : Hub
 {
-    static Dictionary<string, string> _users = new();
-    static Dictionary<string, GameRoom> _games = new();
+    static readonly Dictionary<string, string> _users = new();
+    static readonly Dictionary<string, GameRoom> _games = new();
 
     /// <summary>
     /// Checks against the user dictionary to see if the username is already in use.
     /// </summary>
     /// <param name="username"> The username the user wants to use. </param>
     /// <returns></returns>
-    public bool Register(string username)
+    public async Task Register(string username)
     {
         Debug.WriteLine(Context.ConnectionId + ": Requested the username '" + username + "'");
         
         //Checks if the username fulfills all rules
-        bool AllowedUserName()
-        {
-            if (username == null || username.Length < 1)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        bool UsernameExists()
-        {
-            return _users.Any(user => user.Key.Equals(username));
-        }
+        bool allowedUserName = !string.IsNullOrEmpty(username);
+        bool usernameExists = _users.Any(user => user.Key.Equals(username));
 
         //if username exists generate a new one based on it
-        if (!UsernameExists() && AllowedUserName())
+        if (!usernameExists && allowedUserName)
         {
+            Console.Out.WriteLine("Username '" + username + "' is available.");
             _users.Add(username, Context.ConnectionId);
-            return true;
+            Console.Out.WriteLine("sending shot");
+            await SendShot(1,2);
         }
-
-        return false;
     }
 
-    public bool Shoot(int[,] shotCoordinates)
+    public async Task SendShot(int x, int y)
     {
-        throw new NotImplementedException();
+        await Clients.All.SendAsync("ReceiveShot", x, y);
     }
 
-    public bool YouSunkMyBattleShip()
+    public async Task YouSunkMyBattleShip()
     {
-        throw new NotImplementedException();
+        await Clients.Others.SendAsync("YouSunkOpponentsBattleShip");
     }
 
     /// <summary>
