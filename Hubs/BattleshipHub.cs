@@ -42,7 +42,7 @@ public class BattleshipHub : Hub
         //if username doesnt exists generate a new one based on it
         if (!UsernameExists() && AllowedUserName())
         {
-            _users.Add(displayName, Context.ConnectionId);
+            _users.Add(Context.ConnectionId, displayName);
             return true;
         }
 
