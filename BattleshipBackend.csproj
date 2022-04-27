@@ -16,4 +16,8 @@
       <_ContentIncludedByDefault Remove="BattleshipBackend\obj\project.packagespec.json" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include=".github\workflows\azure-action.yml" />
+    </ItemGroup>
+
 </Project>
