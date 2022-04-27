@@ -116,7 +116,7 @@ public class GameRoom
 {
     public string GameID { get; set; }
     public Player PlayerOne { get; set; } = new Player();
-    public Player PlayerTwo { get; set; } = new Player();
+    public Player? PlayerTwo { get; set; } = new Player();
 }
 
 public class Player
