@@ -93,7 +93,7 @@ public class BattleshipHub : Hub
 
         bool NotFull()
         {
-            return gameRoom.PlayerTwo == null;
+            return gameRoom.PlayerTwo.ConnectionId == null;
         }
     }
 
